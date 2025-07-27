@@ -130,25 +130,6 @@ export default function GroceryTracker() {
             />
           </div>
         )}
-
-        {/* Summary */}
-        {items.length > 0 && (
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <h2 className="text-xl font-semibold text-green-800 mb-4">Summary</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="text-center p-4 bg-green-50 rounded-lg">
-                <p className="text-sm text-gray-600">Total Spent</p>
-                <p className="text-xl font-bold text-green-600">₱{totalSpent.toFixed(2)}</p>
-              </div>
-              <div className="text-center p-4 bg-gray-50 rounded-lg">
-                <p className="text-sm text-gray-600">Remaining Budget</p>
-                <p className={`text-xl font-bold ${remainingBudget >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                  ₱{remainingBudget.toFixed(2)}
-                </p>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );
