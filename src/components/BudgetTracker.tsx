@@ -1,15 +1,16 @@
 'use client';
 
 import React from 'react';
-import { BanknotesIcon, ChartBarIcon } from '@heroicons/react/24/outline';
+import { BanknotesIcon, ChartBarIcon, PencilIcon } from '@heroicons/react/24/outline';
 
 interface BudgetTrackerProps {
   budget: number;
   totalSpent: number;
   remainingBudget: number;
+  onEditBudget?: () => void;
 }
 
-export default function BudgetTracker({ budget, totalSpent, remainingBudget }: BudgetTrackerProps) {
+export default function BudgetTracker({ budget, totalSpent, remainingBudget, onEditBudget }: BudgetTrackerProps) {
   const spentPercentage = budget > 0 ? Math.min((totalSpent / budget) * 100, 100) : 0;
   const isOverBudget = totalSpent > budget;
 
@@ -21,8 +22,19 @@ export default function BudgetTracker({ budget, totalSpent, remainingBudget }: B
           <div className="p-3 bg-green-100 rounded-full">
             <BanknotesIcon className="h-6 w-6 text-green-600" />
           </div>
-          <div>
-            <p className="text-sm text-gray-600">Total Budget</p>
+          <div className="flex-1">
+            <div className="flex items-center gap-2">
+              <p className="text-sm text-gray-600">Total Budget</p>
+              {onEditBudget && (
+                <button
+                  onClick={onEditBudget}
+                  className="p-1 text-gray-400 hover:text-green-600 transition-colors"
+                  title="Edit budget"
+                >
+                  <PencilIcon className="h-4 w-4" />
+                </button>
+              )}
+            </div>
             <p className="text-xl font-bold text-green-800">₱{budget.toFixed(2)}</p>
           </div>
         </div>
@@ -33,13 +45,13 @@ export default function BudgetTracker({ budget, totalSpent, remainingBudget }: B
           </div>
           <div>
             <p className="text-sm text-gray-600">Total Spent</p>
-            <p className="text-xl font-bold text-blue-800">₱{totalSpent.toFixed(2)}</p>
+            <p className="text-xl font-bold text-blue-600">₱{totalSpent.toFixed(2)}</p>
           </div>
         </div>
 
         <div className="flex items-center gap-3">
           <div className={`p-3 rounded-full ${isOverBudget ? 'bg-red-100' : 'bg-green-100'}`}>
-            <BanknotesIcon className={`h-6 w-6 ${isOverBudget ? 'text-red-600' : 'text-green-600'}`} />
+            <BanknotesIcon className={`h-6 w-6 ${isOverBudget ? 'text-red-500' : 'text-green-600'}`} />
           </div>
           <div>
             <p className="text-sm text-gray-600">

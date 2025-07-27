@@ -161,7 +161,7 @@ export default function GroceryList({ items, onEditItem, onDeleteItem }: Grocery
                 </button>
                 <button
                   onClick={() => handleDelete(item.id)}
-                  className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                  className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors"
                   title="Delete item"
                 >
                   <TrashIcon className="h-4 w-4" />

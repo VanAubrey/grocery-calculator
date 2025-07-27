@@ -7,7 +7,7 @@ import AddItemForm from '@/components/AddItemForm';
 import GroceryList from '@/components/GroceryList';
 import BudgetTracker from '@/components/BudgetTracker';
 import OverBudgetWarning from '@/components/OverBudgetWarning';
-import { ShoppingCartIcon } from '@heroicons/react/24/outline';
+import { ShoppingCartIcon, PencilIcon } from '@heroicons/react/24/outline';
 
 export default function GroceryTracker() {
   const [budget, setBudget] = useState<number>(0);
@@ -55,7 +55,7 @@ export default function GroceryTracker() {
 
   return (
     <div className="min-h-screen bg-green-50 py-8 px-4">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-3 mb-4">
@@ -74,21 +74,14 @@ export default function GroceryTracker() {
               onCancel={() => setShowBudgetInput(false)}
             />
           ) : (
-            <div className="flex items-center justify-between">
-              <div>
-                <h2 className="text-xl font-semibold text-green-800 mb-2">Budget Overview</h2>
-                <BudgetTracker
-                  budget={budget}
-                  totalSpent={totalSpent}
-                  remainingBudget={remainingBudget}
-                />
-              </div>
-              <button
-                onClick={() => setShowBudgetInput(true)}
-                className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
-              >
-                Edit Budget
-              </button>
+            <div>
+              <h2 className="text-xl font-semibold text-green-800 mb-4">Budget Overview</h2>
+              <BudgetTracker
+                budget={budget}
+                totalSpent={totalSpent}
+                remainingBudget={remainingBudget}
+                onEditBudget={() => setShowBudgetInput(true)}
+              />
             </div>
           )}
         </div>
@@ -117,7 +110,7 @@ export default function GroceryTracker() {
               {items.length > 0 && (
                 <button
                   onClick={handleResetList}
-                  className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors text-sm"
+                  className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-700 transition-colors text-sm"
                 >
                   Reset List
                 </button>
