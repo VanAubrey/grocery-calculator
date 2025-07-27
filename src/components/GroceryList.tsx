@@ -9,6 +9,7 @@ import {
   XMarkIcon,
   ShoppingBagIcon 
 } from '@heroicons/react/24/outline';
+import ConfirmationModal from './ConfirmationModal';
 
 interface GroceryListProps {
   items: GroceryItem[];
@@ -26,6 +27,11 @@ interface EditingItem {
 export default function GroceryList({ items, onEditItem, onDeleteItem }: GroceryListProps) {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editingItem, setEditingItem] = useState<EditingItem | null>(null);
+  const [deleteModal, setDeleteModal] = useState<{ isOpen: boolean; itemId: string; itemName: string }>({
+    isOpen: false,
+    itemId: '',
+    itemName: ''
+  });
 
   const startEditing = (item: GroceryItem) => {
     setEditingId(item.id);
@@ -55,10 +61,17 @@ export default function GroceryList({ items, onEditItem, onDeleteItem }: Grocery
     cancelEditing();
   };
 
-  const handleDelete = (id: string) => {
-    if (confirm('Are you sure you want to delete this item?')) {
-      onDeleteItem(id);
-    }
+  const handleDelete = (id: string, name: string) => {
+    setDeleteModal({
+      isOpen: true,
+      itemId: id,
+      itemName: name
+    });
+  };
+
+  const confirmDelete = () => {
+    onDeleteItem(deleteModal.itemId);
+    setDeleteModal({ isOpen: false, itemId: '', itemName: '' });
   };
 
   if (items.length === 0) {
@@ -160,8 +173,8 @@ export default function GroceryList({ items, onEditItem, onDeleteItem }: Grocery
                   <PencilIcon className="h-4 w-4" />
                 </button>
                 <button
-                  onClick={() => handleDelete(item.id)}
-                  className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                  onClick={() => handleDelete(item.id, item.name)}
+                  className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                   title="Delete item"
                 >
                   <TrashIcon className="h-4 w-4" />
@@ -171,6 +184,18 @@ export default function GroceryList({ items, onEditItem, onDeleteItem }: Grocery
           )}
         </div>
       ))}
+
+      {/* Delete Confirmation Modal */}
+      <ConfirmationModal
+        isOpen={deleteModal.isOpen}
+        onClose={() => setDeleteModal({ isOpen: false, itemId: '', itemName: '' })}
+        onConfirm={confirmDelete}
+        title="Delete Item"
+        message={`Are you sure you want to delete "${deleteModal.itemName}" from your grocery list?`}
+        confirmText="Delete"
+        cancelText="Cancel"
+        type="danger"
+      />
     </div>
   );
 }

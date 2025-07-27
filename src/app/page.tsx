@@ -7,12 +7,14 @@ import AddItemForm from '@/components/AddItemForm';
 import GroceryList from '@/components/GroceryList';
 import BudgetTracker from '@/components/BudgetTracker';
 import OverBudgetWarning from '@/components/OverBudgetWarning';
+import ConfirmationModal from '@/components/ConfirmationModal';
 import { ShoppingCartIcon, PencilIcon } from '@heroicons/react/24/outline';
 
 export default function GroceryTracker() {
   const [budget, setBudget] = useState<number>(0);
   const [items, setItems] = useState<GroceryItem[]>([]);
   const [showBudgetInput, setShowBudgetInput] = useState(false);
+  const [showResetModal, setShowResetModal] = useState(false);
 
   // Calculate totals
   const totalSpent = items.reduce((sum, item) => 
@@ -46,11 +48,9 @@ export default function GroceryTracker() {
   };
 
   const handleResetList = () => {
-    if (confirm('Are you sure you want to reset the entire list and budget?')) {
-      setBudget(0);
-      setItems([]);
-      setShowBudgetInput(false);
-    }
+    setBudget(0);
+    setItems([]);
+    setShowBudgetInput(false);
   };
 
   return (
@@ -109,7 +109,7 @@ export default function GroceryTracker() {
               <h2 className="text-xl font-semibold text-green-800">Grocery List</h2>
               {items.length > 0 && (
                 <button
-                  onClick={handleResetList}
+                  onClick={() => setShowResetModal(true)}
                   className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-700 transition-colors text-sm"
                 >
                   Reset List
@@ -123,6 +123,18 @@ export default function GroceryTracker() {
             />
           </div>
         )}
+
+        {/* Confirmation Modals */}
+        <ConfirmationModal
+          isOpen={showResetModal}
+          onClose={() => setShowResetModal(false)}
+          onConfirm={handleResetList}
+          title="Reset List"
+          message="Are you sure you want to reset the entire list and budget? This action cannot be undone."
+          confirmText="Reset"
+          cancelText="Cancel"
+          type="danger"
+        />
       </div>
     </div>
   );
