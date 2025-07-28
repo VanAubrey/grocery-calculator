@@ -16,6 +16,8 @@ This Grocery Tracker was born out of that frustration. Now I can:
 
 No more awkward calculator sessions in the grocery aisle!
 
+Here's the deployment link if you want to try: [https://grocery-calculator-gamma.vercel.app](https://grocery-calculator-gamma.vercel.app/)
+
 ## ✨ Features
 
 - **📊 Budget Management** - Set and edit your grocery budget easily
